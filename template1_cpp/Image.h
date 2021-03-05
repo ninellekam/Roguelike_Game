@@ -33,6 +33,7 @@ struct Image
 	void		drawTile(Image image,int x, int y);
 	void		drawTraps(Image image,int x, int y);
 	int			DrawPicForSeconds(Image image,int x, int y);
+	void		drawChechik(Image image,int x, int y);
 
 	~Image();
 

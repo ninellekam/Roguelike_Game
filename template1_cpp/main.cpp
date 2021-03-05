@@ -125,7 +125,7 @@ int initGL()
 	return 0;
 }
 
-int map_draw(std::string file_name, Image &screen, Image &tmp)
+int Player::map_draw(std::string file_name, Image &screen, Image &tmp)
 {
 		std::ifstream F(file_name);
 		char a;
@@ -136,6 +136,15 @@ int map_draw(std::string file_name, Image &screen, Image &tmp)
 								vec.push_back(1);
 								screen.drawTile(Image("../resources/walls.png"), j, i);
 								tmp.drawTile(Image("../resources/walls.png"), j, i);
+						}
+						else if (a == '@') {
+								vec.push_back(1);
+								screen.drawTile(Image("../resources/walls.png"), j, i);
+								tmp.drawTile(Image("../resources/walls.png"), j, i);
+								coords.x = j;
+								coords.y = i;
+								old_coords.x = j;
+								old_coords.y = i;
 						}
 						else if (a == '#') {
 								vec.push_back(2);
@@ -154,7 +163,6 @@ int map_draw(std::string file_name, Image &screen, Image &tmp)
 						}
 						else if (a == 'x') {
 								vec.push_back(4);
-								write(1, "tut", 3);
 								screen.drawTile(Image("../resources/g.png"), j, i);
 								tmp.drawTile(Image("../resources/g.png"), j, i);
 						}
@@ -167,7 +175,7 @@ int map_draw(std::string file_name, Image &screen, Image &tmp)
 int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 				Player &player, std::string file_name, int counter_levels) {
 	// GAME LOOP
-	map_draw(file_name, screenBuffer, tmp);
+	player.map_draw(file_name, screenBuffer, tmp);
 	while (!glfwWindowShouldClose(window))
 	{
 		int ret = 5;

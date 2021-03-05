@@ -27,7 +27,7 @@ enum class MovementDir
 
 struct Player
 {
-	char **map;
+//	char **map;
 	explicit Player(Point pos = {.x = 10, .y = 10}) :
 								 coords(pos), old_coords(coords) {};
 	bool Moved() const;
@@ -37,6 +37,7 @@ struct Player
 
 	const std::vector<std::string> read_map_strings(const std::string& filename);
 	void get_text(const std::vector<std::string>& map_strings, Image &screen);
+	int map_draw(std::string file_name, Image &screen, Image &tmp);
 
 private:
 	// Point coords {.x = 10, .y = 10};

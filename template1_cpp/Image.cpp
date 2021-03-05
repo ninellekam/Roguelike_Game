@@ -90,6 +90,14 @@ void Image::drawTile(Image image,int x, int y){
     }
 }
 
+void Image::drawChechik(Image image,int x, int y){
+  for (int i = 0; i < tileSize; i++){
+        for (int j = 0; j < tileSize; j++){
+            PutPixel(x + i, y + j, image.GetPixel(i, j));
+        }
+    }
+}
+
 int Image::DrawPicForSeconds(Image image,int x, int y){
   for (int i = 0; i < 600; i++){
         for (int j = 0; j < 200; j++){

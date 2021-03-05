@@ -69,9 +69,9 @@ int Player::Draw(Image &screen, Image &tmp, std::vector<std::vector<int>> map, i
 		old_coords = coords;
 	}
 
-	for(int y = coords.y; y <= coords.y + tileSize; ++y)
-		for(int x = coords.x; x <= coords.x + tileSize; ++x)
-			screen.PutPixel(x, y, color);
+	for(int y = coords.y; y <= coords.y; ++y)
+		for(int x = coords.x; x <= coords.x; ++x)
+			screen.drawChechik(Image("../resources/chechik.png"), x, y);
 	return (1);
 }
 

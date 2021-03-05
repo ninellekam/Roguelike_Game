@@ -3,7 +3,7 @@
 #include <string>
 
 constexpr	int tileSize = 32;
-constexpr	int WINDOW_WIDTH = 1024, WINDOW_HEIGHT = 700;
+constexpr	int WINDOW_WIDTH = 1024, WINDOW_HEIGHT = 800;
 
 struct		Pixel
 {

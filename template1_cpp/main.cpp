@@ -144,8 +144,8 @@ int map_draw(std::string file_name, Image &screen, Image &tmp)
 						}
 						else if (a == ' ') {
 							vec.push_back(2);
-							screen.drawTile(Image("../resources/ground.png"), j, i);
-							tmp.drawTile(Image("../resources/ground.png"), j, i);
+							screen.drawTile(Image("../resources/d.png"), j, i);
+							tmp.drawTile(Image("../resources/d.png"), j, i);
 						}
 						else if (a == 'T') {
 								vec.push_back(3);
@@ -154,15 +154,14 @@ int map_draw(std::string file_name, Image &screen, Image &tmp)
 						}
 						else if (a == 'x') {
 								vec.push_back(4);
-							//	write(1, "tut", 3);
-								screen.drawTile(Image("../resources/govnona33.png"), j, i);
-								tmp.drawTile(Image("../resources/govnona33.png"), j, i);
+								write(1, "tut", 3);
+								screen.drawTile(Image("../resources/g.png"), j, i);
+								tmp.drawTile(Image("../resources/g.png"), j, i);
 						}
 				}
 				map.push_back(vec);
 				vec.clear();
 		}
-		write(1, "tut", 3);
 }
 
 int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,

@@ -38,7 +38,7 @@ void Player::ProcessInput(MovementDir dir, std::vector<std::vector<int>> map)
 		if (dir == MovementDir::RIGHT) {
 			old_coords.x = coords.x;
 			for (int i = 0; i < move_dist; i++) {
-				if (map[coords.y / 32][(coords.x + 33) / 32] != 2
+				if (map[coords.y / 32][(coords.x + 1) / 32] != 2
 						&& map[(coords.y + 32)/ 32][(coords.x + 33) / 32] != 2)
 					coords.x++;
 			}

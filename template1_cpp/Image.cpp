@@ -15,6 +15,12 @@ Image::Image(const std::string &a_path)
   {
     size = width * height * channels;
   }
+  else
+  {
+    std::cout << "ERROR\n";
+    exit(-1);
+  }
+
 }
 
 Image::Image(int a_width, int a_height, int a_channels)

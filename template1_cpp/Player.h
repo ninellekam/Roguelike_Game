@@ -9,41 +9,44 @@
 #include <vector>
 #include <iostream>
 #include <fcntl.h>
+#include <unistd.h>
 
 struct Point
 {
-  int x;
-  int y;
+	int x;
+	int y;
 };
 
 enum class MovementDir
 {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
 };
 
 struct Player
 {
-  char **map;
-  explicit Player(Point pos = {.x = 10, .y = 10}) :
-                 coords(pos), old_coords(coords) {};
-  bool Moved() const;
-  void ProcessInput(MovementDir dir, std::vector<std::vector<int>> map);
-  void Draw(Image &screen, Image &cur);
-  void Collision(std::vector<std::vector<int>> map);
+	char **map;
+	explicit Player(Point pos = {.x = 10, .y = 10}) :
+								 coords(pos), old_coords(coords) {};
+	bool Moved() const;
+	void ProcessInput(MovementDir dir, std::vector<std::vector<int>> map);
+	int Draw(Image &screen, Image &cur, std::vector<std::vector<int>> map, int counter_levels);
+	void BlockWall(std::vector<std::vector<int>> map);
 
-  const std::vector<std::string> read_map_strings(const std::string& filename);
-  void get_text(const std::vector<std::string>& map_strings, Image &screen);
+	const std::vector<std::string> read_map_strings(const std::string& filename);
+	void get_text(const std::vector<std::string>& map_strings, Image &screen);
 
 private:
-  Point coords {.x = 10, .y = 10};
-  Point old_coords {.x = 10, .y = 10};
-  Pixel color {.r = 255, .g = 255, .b = 0, .a = 255};
-  Pixel color1 {.r = 0, .g = 0, .b = 255, .a = 255};
-  Pixel color2 {.r = 255, .g = 0, .b = 0, .a = 255};
-  int move_speed = 4;
+	// Point coords {.x = 10, .y = 10};
+	// Point old_coords {.x = 10, .y = 10};
+	Point coords {.x = 0, .y = 0};
+	Point old_coords {.x = 0, .y = 0};
+	Pixel color {.r = 255, .g = 255, .b = 0, .a = 255};
+	Pixel color1 {.r = 0, .g = 0, .b = 255, .a = 255};
+	Pixel color2 {.r = 255, .g = 0, .b = 0, .a = 255};
+	int move_speed = 4;
 
 };
 

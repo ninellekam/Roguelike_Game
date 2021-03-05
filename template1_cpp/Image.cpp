@@ -6,6 +6,7 @@
 #include "stb_image_write.h"
 
 #include <iostream>
+#include <unistd.h>
 
 
 Image::Image(const std::string &a_path)
@@ -62,10 +63,41 @@ Image::~Image()
   }
 }
 
+Image::Image(const Image &screen) {
+  width = screen.width;
+  height = screen.height;
+  channels = screen.channels;
+	size = screen.size;
+  data = screen.data;
+  // data->r = screen.data->r;
+  // data->g = screen.data->g;
+  // data->b = screen.data->b;
+  // data->a = screen.data->a;
+  self_allocated = 0;
+}
+
 void Image::drawTile(Image image,int x, int y){
   for (int i = 0; i < tileSize; i++){
         for (int j = 0; j < tileSize; j++){
             PutPixel(x + i, y + j, image.GetPixel(i, j));
+        }
+    }
+}
+
+int Image::DrawPicForSeconds(Image image,int x, int y){
+  for (int i = 0; i < 600; i++){
+        for (int j = 0; j < 200; j++){
+            PutPixel(x + i, y + j, image.GetPixel(i, j));
+        }
+    }
+  return 1;
+}
+
+void Image::drawTraps(Image image,int x, int y){
+  Pixel color1 {.r = 0, .g = 0, .b = 255, .a = 255};
+  for (int i = 0; i < tileSize; i++){
+    for (int j = 0; j < tileSize; j++){
+            PutPixel(x + i, y + j, color1);
         }
     }
 }

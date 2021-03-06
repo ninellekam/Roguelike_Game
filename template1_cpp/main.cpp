@@ -136,18 +136,17 @@ int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 		player.BlockWall();
 
 
-		ret = player.Draw(screenBuffer, tmp, counter_levels);
+		ret = player.Draw(screenBuffer, tmp, counter_levels, ON_BONUS);
 		if (ret == GAME_TRAP) {
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 			glfwSwapBuffers(window);
 			sleep(3);
 			return (GAME_OVER);
 		}
-		else if (ret == GAME_FIND_OUT) {
+		if (ret == GAME_FIND_OUT) {
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 			glfwSwapBuffers(window);
 			sleep(1);
-			glfwSwapBuffers(window);
 			return (GAME_FIND_OUT);
 		}
 
@@ -201,6 +200,12 @@ int main(int argc, char** argv)
 	int game = -10;
 	if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_1.txt", counter_levels) == GAME_FIND_OUT)) {
 		++counter_levels;
+		for (int i = 0; i < 10; i++) {
+		 	screenBuffer.DrawBonus();
+			usleep(10);
+		}
+		glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
+		glfwSwapBuffers(window);
 		if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_2.txt", counter_levels)) == GAME_FIND_OUT) {
 			screenBuffer.DrawPicForSeconds(Image("../resources/image.png"), 250, 250);
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;

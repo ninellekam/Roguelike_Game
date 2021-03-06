@@ -1,6 +1,5 @@
 #ifndef MAIN_PLAYER_H
 #define MAIN_PLAYER_H
-
 #include "Image.h"
 #include <algorithm>
 #include <fstream>
@@ -12,6 +11,8 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+# define ON_BONUS	11
+# define OFF_BONUS	10
 
 struct Point
 {
@@ -35,7 +36,7 @@ struct Player
 	void	processPlayerMovement();
 	bool	Moved() const;
 	void	ProcessInput(MovementDir dir);
-	int		Draw(Image &screen, Image &cur, int counter_levels);
+	int		Draw(Image &screen, Image &cur, int counter_levels, int fl);
 	void	BlockWall();
 	const	std::vector<std::string> read_map_strings(const std::string& filename);
 	void	get_text(const std::vector<std::string>& map_strings, Image &screen);

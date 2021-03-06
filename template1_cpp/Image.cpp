@@ -74,10 +74,6 @@ Image::Image(const Image &screen) {
   channels = screen.channels;
 	size = screen.size;
   data = screen.data;
-  // data->r = screen.data->r;
-  // data->g = screen.data->g;
-  // data->b = screen.data->b;
-  // data->a = screen.data->a;
   self_allocated = 0;
 }
 
@@ -101,6 +97,30 @@ int Image::DrawPicForSeconds(Image image, int x, int y){
 	for (int i = 0; i < 600; i++){
 		for (int j = 0; j < 200; j++) {
 			PutPixel(x + i, y + j, image.GetPixel(i, j));
+		}
+	}
+	return 1;
+}
+
+int Image::DrawBonus() {
+	for (int i = 0; i < WINDOW_HEIGHT; i++){
+		for (int j = 0; j < WINDOW_WIDTH; j++) {
+      	data[width * (i) + (j)].r *= 0.5;
+			  data[width * (i) + (j)].g *= 0.5;
+			  data[width * (i) + (j)].b *= 0.5;
+		    data[width * (i) + (j)].a *= 0.5;
+		}
+	}
+	return 1;
+}
+
+int Image::DrawBonus_next() {
+	for (int i = 0; i < WINDOW_HEIGHT; i++){
+		for (int j = 0; j < WINDOW_WIDTH; j++) {
+      	data[width * (i) + (j)].r /= 0.8;
+			  data[width * (i) + (j)].g /= 0.8;
+			  data[width * (i) + (j)].b /= 0.8;
+		    data[width * (i) + (j)].a /= 0.8;
 		}
 	}
 	return 1;

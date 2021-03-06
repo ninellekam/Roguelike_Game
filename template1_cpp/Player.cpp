@@ -95,7 +95,7 @@ void Player::ProcessInput(MovementDir dir)
 		}
 }
 
-int Player::Draw(Image &screen, Image &tmp, int counter_levels)
+int Player::Draw(Image &screen, Image &tmp, int counter_levels, int fl)
 {
 	if(Moved()) {
 		for(int x = old_coords.x; x <= old_coords.x + tileSize; ++x)
@@ -109,8 +109,17 @@ int Player::Draw(Image &screen, Image &tmp, int counter_levels)
 							screen.DrawPicForSeconds(Image("../resources/image.png"), 250, 250);
 							return (-1);
 						}
-						screen.DrawPicForSeconds(Image("../resources/newlevel.png"), 250, 250);
-						return (0);
+						if (fl == OFF_BONUS) {
+							screen.DrawPicForSeconds(Image("../resources/newlevel.png"), 250, 250);
+							return (0);
+						}
+						if (fl == ON_BONUS) {
+							for (int i = 0; i < 10; i++) {
+								screen.DrawBonus();
+								usleep(10);
+							}
+							return (0);
+						}
 				}
 				Pixel color_for_draw = tmp.GetPixel(x, y);
 				screen.PutPixel(x, y, color_for_draw);

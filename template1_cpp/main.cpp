@@ -201,7 +201,6 @@ int main(int argc, char** argv)
 	int game = -10;
 	if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_1.txt", counter_levels) == GAME_FIND_OUT)) {
 		++counter_levels;
-	//	map.clear();
 		if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_2.txt", counter_levels)) == GAME_FIND_OUT) {
 			screenBuffer.DrawPicForSeconds(Image("../resources/image.png"), 250, 250);
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;

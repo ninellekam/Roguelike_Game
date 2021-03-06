@@ -4,7 +4,6 @@
 #include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-
 #include <iostream>
 #include <unistd.h>
 
@@ -98,35 +97,11 @@ void Image::drawChechik(Image image,int x, int y){
     }
 }
 
-int Image::DrawPicForSeconds(Image image,int x, int y){
-  for (int i = 0; i < 600; i++){
-        for (int j = 0; j < 200; j++){
-            // data[width * y + x].r *= 0.5;
-            // data[width * y + x].b *= 0.5;
-            // data[width * y + x].g *= 0.5;
-            // data[width * y + x].a *= 0.5;
-            PutPixel(x + i, y + j, backgroundColor);
-        }
-    }
-    sleep(1);
-     for (int i = 0; i < 600; i++){
-        for (int j = 0; j < 200; j++){
-            data[width * y + x].r *= 0.5;
-            data[width * y + x].b *= 0.5;
-            data[width * y + x].g *= 0.5;
-            data[width * y + x].a *= 0.5;
-         //   PutPixel(x + i, y + j, image.GetPixel(i, j));
-        }
-  //    sleep(0.05);
-    }
-  return 1;
-}
-
-void Image::drawTraps(Image image,int x, int y){
-  Pixel color1 {.r = 0, .g = 0, .b = 255, .a = 255};
-  for (int i = 0; i < tileSize; i++){
-    for (int j = 0; j < tileSize; j++){
-            PutPixel(x + i, y + j, color1);
-        }
-    }
+int Image::DrawPicForSeconds(Image image, int x, int y){
+	for (int i = 0; i < 600; i++){
+		for (int j = 0; j < 200; j++) {
+			PutPixel(x + i, y + j, image.GetPixel(i, j));
+		}
+	}
+	return 1;
 }

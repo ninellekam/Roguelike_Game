@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <GLFW/glfw3.h>
 
 bool Player::Moved() const
 {
@@ -11,6 +12,7 @@ bool Player::Moved() const
 int Player::map_draw(std::string file_name, Image &screen, Image &tmp, std::vector<int> vec) {
 		std::ifstream F(file_name);
 		char a;
+		map.clear();
 		for (int i = 0; i < WINDOW_HEIGHT ; i += 32) {
 				for (int j = 0; j < WINDOW_WIDTH; j += 32) {
 						F >> a;
@@ -51,23 +53,28 @@ int Player::map_draw(std::string file_name, Image &screen, Image &tmp, std::vect
 	return (0);
 }
 
+
 void Player::ProcessInput(MovementDir dir)
 {
 	int move_dist = move_speed * 1;
 		if (dir == MovementDir::UP) {
 			old_coords.y = coords.y;
 			for (int i = 0; i < move_dist; i++) {
+				 if (coords.y < WINDOW_HEIGHT - 32 - 2) {
 					if (map[(coords.y + 1) / 32 + 1][coords.x / 32] != 2
 							&& map[(coords.y + 1) / 32 + 1][(coords.x + 32) / 32] != 2)
 							coords.y++;
+				}
 			}
 		}
 		if (dir == MovementDir::DOWN) {
 			old_coords.y = coords.y;
 			for (int i = 0; i < move_dist; i++) {
-				if (map[(coords.y - 33) / 32 + 1][coords.x / 32] != 2
+				if (coords.y > 0) {
+					if (map[(coords.y - 33) / 32 + 1][coords.x / 32] != 2
 						&& map[(coords.y - 33) / 32 + 1][(coords.x + 32) / 32] != 2)
-					coords.y--;
+						coords.y--;
+				}
 			}
 		}
 		if (dir == MovementDir::LEFT) {

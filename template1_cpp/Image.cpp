@@ -101,8 +101,23 @@ void Image::drawChechik(Image image,int x, int y){
 int Image::DrawPicForSeconds(Image image,int x, int y){
   for (int i = 0; i < 600; i++){
         for (int j = 0; j < 200; j++){
-            PutPixel(x + i, y + j, image.GetPixel(i, j));
+            // data[width * y + x].r *= 0.5;
+            // data[width * y + x].b *= 0.5;
+            // data[width * y + x].g *= 0.5;
+            // data[width * y + x].a *= 0.5;
+            PutPixel(x + i, y + j, backgroundColor);
         }
+    }
+    sleep(1);
+     for (int i = 0; i < 600; i++){
+        for (int j = 0; j < 200; j++){
+            data[width * y + x].r *= 0.5;
+            data[width * y + x].b *= 0.5;
+            data[width * y + x].g *= 0.5;
+            data[width * y + x].a *= 0.5;
+         //   PutPixel(x + i, y + j, image.GetPixel(i, j));
+        }
+  //    sleep(0.05);
     }
   return 1;
 }

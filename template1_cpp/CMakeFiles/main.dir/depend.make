@@ -10,6 +10,7 @@ CMakeFiles/main.dir/Image.cpp.o: Image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image_write.h
 
+CMakeFiles/main.dir/Player.cpp.o: /Users/ninakamkia/.brew/include/GLFW/glfw3.h
 CMakeFiles/main.dir/Player.cpp.o: Image.h
 CMakeFiles/main.dir/Player.cpp.o: Player.cpp
 CMakeFiles/main.dir/Player.cpp.o: Player.h

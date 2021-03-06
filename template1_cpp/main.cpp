@@ -1,29 +1,25 @@
 #include "common.h"
 #include "Image.h"
 #include "Player.h"
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#define GLFW_DLL
-#define GAME_OVER -2
-#define GAME_TRAP -1
-#define GAME_FIND_OUT 0
 #include <GLFW/glfw3.h>
+# define GLFW_DLL
+# define GAME_OVER -2
+# define GAME_TRAP -1
+# define GAME_FIND_OUT 0
 
 
-std::vector<std::vector<int>> map;
-std::vector<int> vec;
-int counter_levels = 1;
+ std::vector<std::vector<int>> map;
+// std::vector<int> vec;
+int	counter_levels = 1;
 
-struct InputState
+struct		InputState
 {
-	bool keys[1024]{};
+	bool	keys[1024]{};
 	GLfloat lastX = 400, lastY = 300;
-	bool firstMouse = true;
-	bool captureMouse = true;
-	bool capturedMouseJustNow = false;
-} static Input;
+	bool	firstMouse = true;
+	bool	captureMouse = true;
+	bool	capturedMouseJustNow = false;
+}static		Input;
 
 
 GLfloat deltaTime = 0.0f;
@@ -52,18 +48,17 @@ void OnKeyboardPressed(GLFWwindow* window, int key, int scancode, int action, in
 	}
 }
 
-void processPlayerMovement(Player &player)
+void Player::processPlayerMovement()
 {
-	if (Input.keys[GLFW_KEY_W])
-	{
-		player.ProcessInput(MovementDir::DOWN);
+	if (Input.keys[GLFW_KEY_W]) {
+		ProcessInput(MovementDir::DOWN);
 	}
 	else if (Input.keys[GLFW_KEY_S])
-		player.ProcessInput(MovementDir::UP);
+		ProcessInput(MovementDir::UP);
 	if (Input.keys[GLFW_KEY_A])
-		player.ProcessInput(MovementDir::LEFT);
+		ProcessInput(MovementDir::LEFT);
 	else if (Input.keys[GLFW_KEY_D])
-		player.ProcessInput(MovementDir::RIGHT);
+		ProcessInput(MovementDir::RIGHT);
 }
 
 void OnMouseButtonClicked(GLFWwindow* window, int button, int action, int mods)
@@ -127,7 +122,6 @@ int initGL()
 
 int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 				Player &player, std::string file_name, int counter_levels) {
-	// GAME LOOP
 	std::vector<int> vec;
 	player.map_draw(file_name, screenBuffer, tmp, vec);
 	while (!glfwWindowShouldClose(window))
@@ -138,7 +132,7 @@ int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 		lastFrame = currentFrame;
 		glfwPollEvents();
 
-		processPlayerMovement(player);
+		player.processPlayerMovement();
 		player.BlockWall();
 
 
@@ -207,7 +201,7 @@ int main(int argc, char** argv)
 	int game = -10;
 	if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_1.txt", counter_levels) == GAME_FIND_OUT)) {
 		++counter_levels;
-		map.clear();
+	//	map.clear();
 		if ((game = GameLoop(window, screenBuffer, tmp, player, "../map_level_2.txt", counter_levels)) == GAME_FIND_OUT) {
 			screenBuffer.DrawPicForSeconds(Image("../resources/image.png"), 250, 250);
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;

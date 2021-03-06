@@ -29,7 +29,7 @@ struct Image
 	Pixel*	Data()					{ return  data; }
 
 	Pixel		GetPixel(int x, int y) { return data[width * y + x];}
-	void		PutPixel(int x, int y, const Pixel &pix) { data[width* y + x] = pix; }
+	void		PutPixel(int x, int y, const Pixel &pix) { data[width * y + x] = pix; }
 	void		drawTile(Image image,int x, int y);
 	void		drawTraps(Image image,int x, int y);
 	int			DrawPicForSeconds(Image image,int x, int y);

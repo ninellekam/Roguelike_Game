@@ -32,6 +32,7 @@ struct Player
 //	char **map;
 	explicit Player(Point pos = {.x = 10, .y = 10}) :
 								 coords(pos), old_coords(coords) {};
+	void	processPlayerMovement();
 	bool	Moved() const;
 	void	ProcessInput(MovementDir dir);
 	int		Draw(Image &screen, Image &cur, int counter_levels);

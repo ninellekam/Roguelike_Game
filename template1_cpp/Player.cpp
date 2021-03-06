@@ -8,7 +8,50 @@ bool Player::Moved() const
 		return true;
 }
 
-void Player::ProcessInput(MovementDir dir, std::vector<std::vector<int>> map)
+int Player::map_draw(std::string file_name, Image &screen, Image &tmp, std::vector<int> vec) {
+		std::ifstream F(file_name);
+		char a;
+		for (int i = 0; i < WINDOW_HEIGHT ; i += 32) {
+				for (int j = 0; j < WINDOW_WIDTH; j += 32) {
+						F >> a;
+						if (a == '.') {
+								vec.push_back(1);
+								screen.drawTile(Image("../resources/walls.png"), j, i);
+								tmp.drawTile(Image("../resources/walls.png"), j, i);
+						}
+						else if (a == '@') {
+								vec.push_back(1);
+								screen.drawTile(Image("../resources/walls.png"), j, i);
+								tmp.drawTile(Image("../resources/walls.png"), j, i);
+								coords.x = j;
+								coords.y = i;
+								old_coords.x = j;
+								old_coords.y = i;
+						}
+						else if (a == '#') {
+								vec.push_back(2);
+								screen.drawTile(Image("../resources/d.png"), j, i);
+						}
+						else if (a == ' ') {
+							vec.push_back(2);
+							screen.drawTile(Image("../resources/d.png"), j, i);
+						}
+						else if (a == 'T') {
+								vec.push_back(3);
+								screen.drawTile(Image("../resources/another_spikes.png"), j, i);
+						}
+						else if (a == 'x') {
+								vec.push_back(4);
+								screen.drawTile(Image("../resources/g.png"), j, i);
+						}
+				}
+				map.push_back(vec);
+				vec.clear();
+		}
+	return (0);
+}
+
+void Player::ProcessInput(MovementDir dir)
 {
 	int move_dist = move_speed * 1;
 		if (dir == MovementDir::UP) {
@@ -45,9 +88,8 @@ void Player::ProcessInput(MovementDir dir, std::vector<std::vector<int>> map)
 		}
 }
 
-int Player::Draw(Image &screen, Image &tmp, std::vector<std::vector<int>> map, int counter_levels)
+int Player::Draw(Image &screen, Image &tmp, int counter_levels)
 {
-//	Image tm(screen);
 	if(Moved()) {
 		for(int x = old_coords.x; x <= old_coords.x + tileSize; ++x)
 			for(int y = old_coords.y; y <= old_coords.y + tileSize; ++y) {
@@ -75,7 +117,7 @@ int Player::Draw(Image &screen, Image &tmp, std::vector<std::vector<int>> map, i
 	return (1);
 }
 
-void Player::BlockWall(std::vector<std::vector<int>> map) {
+void Player::BlockWall() {
 		int delta_x = coords.x - old_coords.x;
 		int delta_y = coords.y - old_coords.y;
 		for (int i = coords.y / 32; i < (coords.y + 64) / 32; i++) {
@@ -92,7 +134,7 @@ void Player::BlockWall(std::vector<std::vector<int>> map) {
 		}
 }
 
-void    ft_scaled(Image &screen, int i, int j, Pixel color)
+void	ft_scaled(Image &screen, int i, int j, Pixel color)
 {
 		int x = 0;
 		int y = 0;
@@ -106,7 +148,6 @@ void    ft_scaled(Image &screen, int i, int j, Pixel color)
 		}
 }
 
-//------------------------------ my functions --------------------
 void Player::get_text(const std::vector<std::string>& map_strings, Image &screen)
 {
 	for (int i = 0; i < map_strings.size(); i++)

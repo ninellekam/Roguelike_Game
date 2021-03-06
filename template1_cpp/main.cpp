@@ -18,10 +18,10 @@ int counter_levels = 1;
 
 struct InputState
 {
-	bool keys[1024]{}; //массив состояний кнопок - нажата/не нажата
-	GLfloat lastX = 400, lastY = 300; //исходное положение мыши
+	bool keys[1024]{};
+	GLfloat lastX = 400, lastY = 300;
 	bool firstMouse = true;
-	bool captureMouse = true;  // Мышка захвачена нашим приложением или нет?
+	bool captureMouse = true;
 	bool capturedMouseJustNow = false;
 } static Input;
 
@@ -52,18 +52,18 @@ void OnKeyboardPressed(GLFWwindow* window, int key, int scancode, int action, in
 	}
 }
 
-void processPlayerMovement(Player &player, std::vector<std::vector<int>> map)
+void processPlayerMovement(Player &player)
 {
 	if (Input.keys[GLFW_KEY_W])
 	{
-		player.ProcessInput(MovementDir::DOWN, map);
+		player.ProcessInput(MovementDir::DOWN);
 	}
 	else if (Input.keys[GLFW_KEY_S])
-		player.ProcessInput(MovementDir::UP, map);
+		player.ProcessInput(MovementDir::UP);
 	if (Input.keys[GLFW_KEY_A])
-		player.ProcessInput(MovementDir::LEFT, map);
+		player.ProcessInput(MovementDir::LEFT);
 	else if (Input.keys[GLFW_KEY_D])
-		player.ProcessInput(MovementDir::RIGHT, map);
+		player.ProcessInput(MovementDir::RIGHT);
 }
 
 void OnMouseButtonClicked(GLFWwindow* window, int button, int action, int mods)
@@ -125,57 +125,11 @@ int initGL()
 	return 0;
 }
 
-int Player::map_draw(std::string file_name, Image &screen, Image &tmp)
-{
-		std::ifstream F(file_name);
-		char a;
-		for (int i = 0; i < WINDOW_HEIGHT ; i += 32) {
-				for (int j = 0; j < WINDOW_WIDTH; j += 32) {
-						F >> a;
-						if (a == '.') {
-								vec.push_back(1);
-								screen.drawTile(Image("../resources/walls.png"), j, i);
-								tmp.drawTile(Image("../resources/walls.png"), j, i);
-						}
-						else if (a == '@') {
-								vec.push_back(1);
-								screen.drawTile(Image("../resources/walls.png"), j, i);
-								tmp.drawTile(Image("../resources/walls.png"), j, i);
-								coords.x = j;
-								coords.y = i;
-								old_coords.x = j;
-								old_coords.y = i;
-						}
-						else if (a == '#') {
-								vec.push_back(2);
-								screen.drawTile(Image("../resources/d.png"), j, i);
-								tmp.drawTile(Image("../resources/d.png"), j, i);
-						}
-						else if (a == ' ') {
-							vec.push_back(2);
-							screen.drawTile(Image("../resources/d.png"), j, i);
-							tmp.drawTile(Image("../resources/d.png"), j, i);
-						}
-						else if (a == 'T') {
-								vec.push_back(3);
-								screen.drawTile(Image("../resources/another_spikes.png"), j, i);
-								tmp.drawTile(Image("../resources/another_spikes.png"), j, i);
-						}
-						else if (a == 'x') {
-								vec.push_back(4);
-								screen.drawTile(Image("../resources/g.png"), j, i);
-								tmp.drawTile(Image("../resources/g.png"), j, i);
-						}
-				}
-				map.push_back(vec);
-				vec.clear();
-		}
-}
-
 int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 				Player &player, std::string file_name, int counter_levels) {
 	// GAME LOOP
-	player.map_draw(file_name, screenBuffer, tmp);
+	std::vector<int> vec;
+	player.map_draw(file_name, screenBuffer, tmp, vec);
 	while (!glfwWindowShouldClose(window))
 	{
 		int ret = 5;
@@ -184,11 +138,11 @@ int	GameLoop(GLFWwindow* window, Image &screenBuffer, Image &tmp,
 		lastFrame = currentFrame;
 		glfwPollEvents();
 
-		processPlayerMovement(player, map);
-		player.BlockWall(map);
+		processPlayerMovement(player);
+		player.BlockWall();
 
 
-		ret = player.Draw(screenBuffer, tmp, map, counter_levels);
+		ret = player.Draw(screenBuffer, tmp, counter_levels);
 		if (ret == GAME_TRAP) {
 			glDrawPixels (WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 			glfwSwapBuffers(window);
@@ -231,7 +185,6 @@ int main(int argc, char** argv)
 	}
 
 	glfwMakeContextCurrent(window);
-
 	glfwSetKeyCallback        (window, OnKeyboardPressed);
 	glfwSetCursorPosCallback  (window, OnMouseMove);
 	glfwSetMouseButtonCallback(window, OnMouseButtonClicked);

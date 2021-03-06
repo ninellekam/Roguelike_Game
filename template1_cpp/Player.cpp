@@ -114,9 +114,9 @@ int Player::Draw(Image &screen, Image &tmp, int counter_levels, int fl)
 							return (0);
 						}
 						if (fl == ON_BONUS) {
-							for (int i = 0; i < 10; i++) {
+							for (int i = 0; i < 5; i++) {
 								screen.DrawBonus();
-								usleep(10);
+								usleep(1);
 							}
 							return (0);
 						}
